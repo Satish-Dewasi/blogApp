@@ -1,0 +1,33 @@
+
+1. created userModal 
+     >> with username , email and password
+     >> username: {
+        type : String,
+        required : [true, "username is required"]
+       },
+
+2. Structuring project 
+         
+         >> cofig 
+         >> controller
+         >> middlewares
+         >> models
+         >> Notes
+         >> routes
+         >> utils
+         >> env
+         >> gitignore
+         >> server file 
+
+3. creating user routes
+        >> userRoutes file
+
+
+4. created controller function 
+        >> userController file
+
+5 access that routes in server file 
+       >> app.use('/api/v1/user', userRoutes) 
+
+
+        
