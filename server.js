@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB  from "./config/db.js";
 import userRoutes from './routes/userRoutes.js'
+import blogRoutes from './routes/blogRoutes.js'
+
 
 //dotenv config
 dotenv.config();
@@ -19,6 +21,7 @@ app.use(express.json())
  
 // routes
 app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/blog', blogRoutes)
 
 
 

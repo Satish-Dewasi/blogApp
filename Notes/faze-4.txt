@@ -1,0 +1,16 @@
+
+1. blog model created 
+    >> design schema with title , body and image fields
+
+2. created blog routes 
+     >> get all blogs route
+     >> create new blog
+     >> update
+     >> delete
+     >> get single blog by id
+
+
+3. created contnroller for all above the routes 
+      >> blog conroller file 
+
+
