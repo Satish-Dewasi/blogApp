@@ -1,0 +1,10 @@
+
+1. working on user controller
+
+2. adding functionality in registerController function
+        >> getting data from req body
+        >> validation check
+        >> existing user check
+        >> creating and saving new user 
+        >> error handling 
+        
