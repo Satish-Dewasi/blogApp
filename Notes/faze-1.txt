@@ -1,0 +1,21 @@
+
+1. project setup
+    >> npm init
+
+2. installed dependencies 
+    >> express
+    >> mongoose
+    >> cors
+    >> nodemon
+    >> dotenv
+
+3. added script to run the server
+   >> "node": node server.js
+   >> "nodemon": nodemon server.js 
+
+4. created server file 
+
+5. dotenv.config()
+
+6. created database file and set up connection 
+
