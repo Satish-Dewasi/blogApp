@@ -7,4 +7,19 @@
         >> existing user check
         >> creating and saving new user 
         >> error handling 
+
+
+3 . created endpoint for getting all the userRoutes
+
+4. password hashing functionality added
+         >> using bcrypt pkg
+
+5 created login endpoint 
+        >> validation
+        >> checking that user exist or Not 
+        >> password dcryption and comparation
+        >> login success
+        >> error handling
+
+
         
