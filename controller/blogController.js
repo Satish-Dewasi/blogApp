@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import blogModel from "../models/blogModel.js";
+import userModel from "../models/userModal.js";
 
 // get all blogs
 const getAllBlogController = async(req, res)=>{
@@ -33,18 +35,38 @@ const getAllBlogController = async(req, res)=>{
 // create blog
 const createBlogController = async(req, res)=>{
      try {
-       const {title, description, image}= req.body;
+       const {title, description, image, user}= req.body;
        
        //validation
-       if(!title || !description || !image){
+       if(!title || !description || !image || !user){
           return res.status(200).send({
             success : false,
             message: "Please provide all the feilds",
         })
        }
-       // adding new blog
-       const newBlog = await new blogModel({title, description, image}).save();
-  
+       
+       // validating user
+       const existingUser = await userModel.findById(user);
+       if(!existingUser){
+          return res.status(404).send({
+               success : false,
+               message: "unable to find user",
+          })
+       }
+
+       // creating new blog
+       const newBlog = new blogModel({title, description, image, user});
+       
+      // creating mongoose session
+      const session = await mongoose.startSession();   //created
+      session.startTransaction();      // start
+      await newBlog.save({session});     //saving using session
+      existingUser.blogs.push(newBlog);
+      await existingUser.save({session});
+      await session.commitTransaction();     //ending session
+
+      // saving blog
+       await newBlog.save();
        return res.status(200).send({
             success : true,
             message: "blog created",
@@ -76,7 +98,7 @@ const updateBlogController = async(req, res)=>{
         
      } catch (error) {
         console.log(error);
-        res.status(500).send({
+        return res.status(500).send({
             success : false,
             message: "error in update blog conntroller",
             error
@@ -89,7 +111,9 @@ const deleteBlogController = async(req, res)=>{
      try {
         const {id} = req.params;
 
-        await blogModel.findByIdAndDelete(id);
+        const blog = await blogModel.findByIdAndDelete(id).populate('user');
+        await blog.user.blogs.pull(blog);
+        await blog.user.save();
 
         return res.status(200).send({
             success : true,
@@ -98,7 +122,7 @@ const deleteBlogController = async(req, res)=>{
         
      } catch (error) {
         console.log(error);
-        res.status(500).send({
+        return res.status(500).send({
             success : false,
             message: "error in delete blog conntroller",
             error
@@ -129,7 +153,7 @@ const getBlogByIdController = async(req, res)=>{
         
      } catch (error) {
         console.log(error);
-        res.status(500).send({
+        return  res.status(500).send({
             success : false,
             message: "error in get blog by id conntroller",
             error
@@ -137,9 +161,40 @@ const getBlogByIdController = async(req, res)=>{
      }
 }
 
+// userBlogController
+
+const userBlogController = async (req, res)=>{
+    try {
+
+        const userBlog = await userModel.findById(req.params.id).populate('blogs');
+
+        if(!userBlog){
+          return res.status(404).send({
+             success : false,
+             message: "blog not found with this id",
+          })
+        }
+
+       return res.status(200).send({
+            success : true,
+            message: "user blog",
+            blogCount : userBlog.blogs.length, 
+            userBlog
+       })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success : false,
+            message: "error in get blog of user",
+            error
+        })
+    }
+}
+
 export {
        getAllBlogController, createBlogController,
        updateBlogController, deleteBlogController, 
-       getBlogByIdController
+       getBlogByIdController, userBlogController
     }
 

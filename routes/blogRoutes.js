@@ -1,7 +1,8 @@
 import express from 'express'
 import { createBlogController, deleteBlogController, 
          getAllBlogController, getBlogByIdController, 
-         updateBlogController } from '../controller/blogController.js';
+         updateBlogController, 
+         userBlogController} from '../controller/blogController.js';
 
 // router object
 const router = express.Router();
@@ -22,5 +23,9 @@ router.delete('/delete-blog/:id', deleteBlogController);
 
 // get single blog
 router.get('/get-blog/:id', getBlogByIdController);
+
+
+//user blogs
+router.get('/user-blog/:id', userBlogController);
 
 export default router

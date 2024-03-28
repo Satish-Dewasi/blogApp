@@ -14,3 +14,29 @@
       >> blog conroller file 
 
 
+
+4. addingg reletion between user and blog 
+         >> added user id when new blog created
+         >> in user a blog array added 
+         >> that will have id of all the blog that are created by user
+
+
+5. How to add relation --
+    user:{
+        type: mongoose.Types.ObjectId,
+        ref :'User',
+        required:[true, 'user id is required']
+    }
+
+6. added mongoose session in createBlogController
+
+
+7. added populate method in deleteController
+         
+         In Mongoose, the populate() method is used to populate referenced documents 
+         in a query result. It allows you to automatically retrieve and replace references
+         in your documents with the actual documents from other collections. 
+         This is particularly useful when working with relational data in MongoDB, 
+         where documents in one collection reference documents in another collection.
+
+8. created a endpoint for getting all the blog of particular user
